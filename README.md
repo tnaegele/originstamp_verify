@@ -6,7 +6,7 @@ Just clone this repo, create a virtualenv which fulfils the requirements from re
 ~~~bash
 python originstamp_verify <filename>
 ~~~
-where <filename> points to an Originstamp Bitcoin pdf proof.
+where filename points to an Originstamp Bitcoin proof pdf file.
 
 Example output
 ~~~
@@ -32,7 +32,7 @@ Blockchain timestamp 1628278522
 
 
 ## Bitcoin API
-The script uses uses Blockstream's Bitcoin transaction API, see https://github.com/Blockstream/esplora/blob/master/API.md. 
+The script uses Blockstream's Bitcoin transaction API, see https://github.com/Blockstream/esplora/blob/master/API.md. 
 Please be reasonable with the number of requests you make.
 
 ## Verification process
