@@ -1,6 +1,12 @@
 # originstamp_verify
 A script which verifies blockchain timestamps created with Originstamp. Currently only Bitcoin timestamps are supported and the program can only parse pdf proofs. 
 
+## Usage
+Just clone this repo, create a virtualenv which fulfils the requirements from requirements.txt and run
+~~~bash
+python originstamp_verify <filename>
+~~~
+
 ## Bitcoin API
 The script uses uses Blockcypher's Bitcoin transaction API, see https://www.blockcypher.com/dev/bitcoin/#unconfirmed-transactions-endpoint. 
 Please be reasonable with the number of requests you make.
