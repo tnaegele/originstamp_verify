@@ -32,7 +32,7 @@ Blockchain timestamp 1628278522
 
 
 ## Bitcoin API
-The script uses uses Blocktree's Bitcoin transaction API, see https://github.com/Blockstream/esplora/blob/master/API.md. 
+The script uses uses Blockstream's Bitcoin transaction API, see https://github.com/Blockstream/esplora/blob/master/API.md. 
 Please be reasonable with the number of requests you make.
 
 ## Verification process
