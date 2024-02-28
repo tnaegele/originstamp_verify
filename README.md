@@ -6,9 +6,33 @@ Just clone this repo, create a virtualenv which fulfils the requirements from re
 ~~~bash
 python originstamp_verify <filename>
 ~~~
+where <filename> points to an Originstamp Bitcoin pdf proof.
+
+Example output
+~~~
+extracted from pdf:
+document hash 3d8d0baaa101e63ce25de59b9c8153b4d4368004a9e6e251e6366e247179399f
+bitcoin transaction b5582ae6b5a96c645f78c8e10a3b46527b1900097eda6f57c003a2187a230408
+
+
+Checking existence of bitcoin blockchain transaction
+ success ✓
+Check if document hash is in the merkle tree:
+ success ✓
+Check merkle tree integrity:
+ success ✓
+Check if merkle root identical to op_return value in bitcoin blockchain:
+ success ✓
+
+
+Document hash 3d8d0baaa101e63ce25de59b9c8153b4d4368004a9e6e251e6366e247179399f has been successfully embedded in the bitcoin blockchain
+Number of confirmations: 694521
+Blockchain timestamp 1628278522
+~~~
+
 
 ## Bitcoin API
-The script uses uses Blockcypher's Bitcoin transaction API, see https://www.blockcypher.com/dev/bitcoin/#unconfirmed-transactions-endpoint. 
+The script uses uses Blocktree's Bitcoin transaction API, see https://github.com/Blockstream/esplora/blob/master/API.md. 
 Please be reasonable with the number of requests you make.
 
 ## Verification process
