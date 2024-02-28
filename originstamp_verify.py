@@ -3,8 +3,8 @@
 '''
 This script verifies timestamps created with Originstamp. Currently only Bitcoin
 timestamps and pdf proofs are supported.
-The program currently uses Blockcypher's Bitcoin transaction API, see 
-https://www.blockcypher.com/dev/bitcoin/#unconfirmed-transactions-endpoint. 
+The program currently uses Blockstream's Bitcoin transaction API, see 
+https://github.com/Blockstream/esplora/blob/master/API.md
 Please be reasonable with the number of requests you make.
 
 
@@ -51,6 +51,7 @@ import pdfextract as pdf  # scrapes the xml data from the originstamp pdf
 import argparse
 import sys
 
+API_URL = 'https://blockstream.info/api/tx/' # hardcode API URL
 
 def init_argparse():
     parser = argparse.ArgumentParser(
@@ -58,11 +59,6 @@ def init_argparse():
         description='Verifies an Originstamp blockchain timestamp pdf proof. Currently only Bitcoin timestamps are supported and script can only verify pdf proofs.')
     parser.add_argument(
         'file', help='Originstamp proof pdf file to be verified')
-    parser.add_argument(
-        '--bitcoin_api',
-        default='https://api.blockcypher.com/v1/btc/main/txs/',
-        help='URL of Bitcoin API endpoint to be called')
-
     return parser
 
 
@@ -89,8 +85,7 @@ def print_fail():
     '''
     print('\033[91m failure ✗\033[0m')
 
-
-def check_bitcoin(transaction: str, api_url: str):
+def check_bitcoin(transaction: str, api_url=API_URL):
     '''
     Queries the bitcoin blockchain and return the OP_return value and the number of confirmations of a transaction
 
@@ -122,9 +117,9 @@ def check_bitcoin(transaction: str, api_url: str):
     elif response.status_code != 200:  # if transaction not found or no connection to api
         raise Exception('Request to Blockchain API has failed.')
     payload = response.json()
-    op_return = payload['outputs'][0]['data_hex']
-    confirmations = payload['confirmations']
-    timestamp = payload['received']
+    op_return = payload['vout'][0]['scriptpubkey_asm'].split(' ')[2]
+    confirmations = payload['status']['block_height']
+    timestamp = payload['status']['block_time']
 
     return op_return, confirmations, timestamp
 
@@ -228,7 +223,7 @@ def pdf_text_to_xml(text):
     return pdf_xml, pdf_hash, pdf_transaction
 
 
-def verify_file(file, api_url):
+def verify_file(file):
     '''
     Verify Originstamp tiemstamop proof pdf file.
 
@@ -253,7 +248,7 @@ def verify_file(file, api_url):
     print('Checking existence of bitcoin blockchain transaction')
     try:
         op_return, confirms, timestamp = check_bitcoin(
-            pdf_transaction, api_url)
+            pdf_transaction)
     except BaseException:
         print_fail()
         exit(0)
@@ -295,8 +290,7 @@ if __name__ == '__main__':
     parser = init_argparse()
     args = parser.parse_args()
     file = args.file
-    api_url = args.bitcoin_api
     try:
-        verify_file(file=file, api_url=api_url)
+        verify_file(file=file)
     except (FileNotFoundError, IsADirectoryError) as err:
         print(f"{sys.argv[0]}: {file}: {err.strerror}", file=sys.stderr)
