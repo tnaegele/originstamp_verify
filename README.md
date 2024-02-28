@@ -1,5 +1,5 @@
 # originstamp_verify
-A script which verifies blockchain timestamps created with Originstamp. Currently only Bitcoin timestamps are supported and the program can only parse pdf proofs. 
+A script which verifies blockchain timestamps created with [Originstamp](https://originstamp.com/). Currently only Bitcoin timestamps are supported and the program can only parse pdf proofs. 
 
 ## Usage
 Just clone this repo, create a virtualenv which fulfils the requirements from requirements.txt and run
