@@ -37,11 +37,11 @@ Please be reasonable with the number of requests you make.
 
 ## Verification process
 The following steps are undertaken in the verification process:
-1) extract transaction and timestamped document hash
-2) query bitcoin blockchain and fetch merkle root (OP_RETURN value)
+1) extract transaction hash, the timestamped document hash, and the merkle tree from the Originstamp pdf file
+2) query bitcoin blockchain transaction and corresponding block and fetch merkle root (OP_RETURN value)
 3) check integrity of merkle tree
 4) check that document hash is in merkle tree
-5) check the merkle root is identical to value stored in blockchain
+5) check the merkle root is identical to OP_RETURN value stored in the Bitcoin blockchain
 
 
 ## License
